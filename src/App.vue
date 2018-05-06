@@ -1,26 +1,36 @@
 <template>
   <div id="app">
+    <!-- 左边导航 -->
     <leftNav></leftNav>
-    <router-view/>
+    <div class="main">
+      <router-view/>
+    </div>
   </div>
 </template>
 
 <script>
-import leftNav from '@/components/common/leftNav'
+import leftNav from "@/components/common/leftNav";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     leftNav
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+.main {
+  background-color: rgba(0, 0, 0, 0.1);
+  float: left;
+  width: 95%;
+  height: 100%;
+  overflow: hidden;
 }
 </style>
