@@ -27,7 +27,8 @@ export default {
   color: #2c3e50;
 }
 .main {
-  background-color: rgba(0, 0, 0, 0.1);
+  /* background-color: rgba(0, 0, 0, 0.1); */
+  background-color: #F6F6FD;
   float: left;
   width: 95%;
   height: 100%;
