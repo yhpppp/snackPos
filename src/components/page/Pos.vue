@@ -51,9 +51,33 @@
                 </li>
               </ul>
             </el-tab-pane>
-            <el-tab-pane label="小吃">小吃</el-tab-pane>
-            <el-tab-pane label="饮料">饮料</el-tab-pane>
-            <el-tab-pane label="套餐">套餐</el-tab-pane>
+            <el-tab-pane label="小吃">
+              <ul class='cookList'>
+                <li v-for="goods in type1Goods">
+                  <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
+                  <span class="foodName">{{goods.goodsName}}</span>
+                  <span class="foodPrice">￥{{goods.price}}元</span>
+                </li>
+              </ul>
+            </el-tab-pane>
+            <el-tab-pane label="饮料">
+              <ul class='cookList'>
+                <li v-for="goods in type2Goods">
+                  <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
+                  <span class="foodName">{{goods.goodsName}}</span>
+                  <span class="foodPrice">￥{{goods.price}}元</span>
+                </li>
+              </ul>
+            </el-tab-pane>
+            <el-tab-pane label="套餐">
+              <ul class='cookList'>
+                <li v-for="goods in type3Goods">
+                  <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
+                  <span class="foodName">{{goods.goodsName}}</span>
+                  <span class="foodPrice">￥{{goods.price}}元</span>
+                </li>
+              </ul>
+            </el-tab-pane>
           </el-tabs>
         </div>
       </el-col>
@@ -62,6 +86,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -87,121 +113,38 @@ export default {
           count: 1
         }
       ],
-      oftenGoods: [
-        {
-          goodsId: 1,
-          goodsName: "香辣鸡腿堡",
-          price: 18
-        },
-        {
-          goodsId: 2,
-          goodsName: "田园鸡腿堡",
-          price: 15
-        },
-        {
-          goodsId: 3,
-          goodsName: "和风汉堡",
-          price: 15
-        },
-        {
-          goodsId: 4,
-          goodsName: "快乐全家桶",
-          price: 80
-        },
-        {
-          goodsId: 5,
-          goodsName: "脆皮炸鸡腿",
-          price: 10
-        },
-        {
-          goodsId: 6,
-          goodsName: "魔法鸡块",
-          price: 20
-        },
-        {
-          goodsId: 7,
-          goodsName: "可乐大杯",
-          price: 10
-        },
-        {
-          goodsId: 8,
-          goodsName: "雪顶咖啡",
-          price: 18
-        },
-        {
-          goodsId: 9,
-          goodsName: "大块鸡米花",
-          price: 15
-        },
-        {
-          goodsId: 20,
-          goodsName: "香脆鸡柳",
-          price: 17
-        }
-      ],
-      type0Goods: [
-        {
-          goodsId: 1,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos001.jpg",
-          goodsName: "香辣鸡腿堡",
-          price: 18
-        },
-        {
-          goodsId: 2,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos002.jpg",
-          goodsName: "田园鸡腿堡",
-          price: 15
-        },
-        {
-          goodsId: 3,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos004.jpg",
-          goodsName: "和风汉堡",
-          price: 15
-        },
-        {
-          goodsId: 4,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos003.jpg",
-          goodsName: "快乐全家桶",
-          price: 80
-        },
-        {
-          goodsId: 5,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos003.jpg",
-          goodsName: "脆皮炸鸡腿",
-          price: 10
-        },
-        {
-          goodsId: 6,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos004.jpg",
-          goodsName: "魔法鸡块",
-          price: 20
-        },
-        {
-          goodsId: 7,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos001.jpg",
-          goodsName: "可乐大杯",
-          price: 10
-        },
-        {
-          goodsId: 8,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos003.jpg",
-          goodsName: "雪顶咖啡",
-          price: 18
-        },
-        {
-          goodsId: 9,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos002.jpg",
-          goodsName: "大块鸡米花",
-          price: 15
-        },
-        {
-          goodsId: 20,
-          goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos002.jpg",
-          goodsName: "香脆鸡柳",
-          price: 17
-        }
-      ]
+      oftenGoods: [],
+      type0Goods: [],
+      type1Goods: [],
+      type2Goods: [],
+      type3Goods: []
     };
+  },
+  created: function() {
+    // var _this = this   // es5要设置this指向
+
+    /* 后台通信获取数据 */
+    axios
+      .get("http://jspang.com/DemoApi/oftenGoods.php")
+      .then(response => {
+        // console.log(response);
+        this.oftenGoods = response.data;
+      })
+      .catch(error => {
+        alert("无法获取!");
+      });
+    axios
+      .get("http://jspang.com/DemoApi/typeGoods.php")
+      .then(response => {
+        // console.log(response);
+        this.type0Goods = response.data[0];
+        this.type1Goods = response.data[1];
+        this.type2Goods = response.data[2];
+        this.type3Goods = response.data[3];
+      })
+      .catch(error => {
+        alert("无法获取!");
+      });
   },
   mounted: function() {
     /* 解决订单栏高度100% */
@@ -255,13 +198,14 @@ export default {
 .often-goods .often-goods-list ul li:hover {
   background-color: rgb(197, 210, 218);
   user-select: none;
+  cursor: pointer;
 }
 
 /* 商品类型 */
 .goods-type {
   clear: both;
+  margin-left: 11px;
 }
-
 .cookList li {
   list-style: none;
   width: 23%;
@@ -273,6 +217,9 @@ export default {
   float: left;
   margin: 4px;
   cursor: pointer;
+}
+.cookList li:hover {
+  background-color: rgb(197, 210, 218);
 }
 .cookList li span {
   display: block;
@@ -291,5 +238,4 @@ export default {
   padding-left: 10px;
   padding-top: 10px;
 }
-
 </style>
