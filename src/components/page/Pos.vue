@@ -12,7 +12,7 @@
                 <el-table-column prop="" label="操作" fixed="right">
                   <template slot-scope="scope">
                     <el-button type="text" size="small">删除</el-button>
-                    <el-button type="text" size="small">增加</el-button>
+                    <el-button type="text" size="small" @click="addOrderList(scope.row)">增加</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -33,7 +33,7 @@
           <div class="title">常用商品</div>
           <div class="often-goods-list">
             <ul>
-              <li v-for="goods in oftenGoods">
+              <li v-for="goods in oftenGoods" @click="addOrderList(goods)">
                 <span>{{goods.goodsName}}</span>
                 <span class="goods-price">￥{{goods.price}}元</span>
               </li>
@@ -91,28 +91,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      tableData: [
-        {
-          goodsName: "可口可乐",
-          price: 8,
-          count: 1
-        },
-        {
-          goodsName: "香辣鸡腿堡",
-          price: 15,
-          count: 1
-        },
-        {
-          goodsName: "爱心薯条",
-          price: 8,
-          count: 1
-        },
-        {
-          goodsName: "甜筒",
-          price: 8,
-          count: 1
-        }
-      ],
+      tableData: [],
       oftenGoods: [],
       type0Goods: [],
       type1Goods: [],
@@ -149,8 +128,38 @@ export default {
   mounted: function() {
     /* 解决订单栏高度100% */
     var bodyHeight = document.body.clientHeight;
-    console.log(bodyHeight);
+    // console.log(bodyHeight);
     document.querySelector("#order-list").style.height = bodyHeight + "px";
+  },
+  methods: {
+    /* 点击商品添加到列表 */
+    addOrderList (goods) {
+      let isHave = false
+       //判断是否这个商品已经存在于订单列表
+       for(let i = 0; i < this.tableData.length; i++) {
+        //  console.log(this.tableData[i].goodsId);
+         if(this.tableData[i].goodsId == goods.goodsId) {
+           isHave = true;  //已存在
+         }
+       }
+       //根据isHave的值判断订单列表中是否已经有此商品
+       if(isHave) {
+         //存在就进行数量添加 
+         let arr = this.tableData.filter(o =>o.goodsId == goods.goodsId)
+         arr[0].count++
+        //  console.log(arr)
+         
+       } else {
+         //不存在就推入数组
+         let newGoods = {
+           goodsId : goods.goodsId,
+           goodsName : goods.goodsName,
+           price : goods.price,
+           count : 1
+         }
+         this.tableData.push(newGoods)
+       }
+    } 
   }
 };
 </script>
