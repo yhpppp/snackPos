@@ -11,15 +11,15 @@
                 <el-table-column prop="price" label="价格"></el-table-column>
                 <el-table-column prop="" label="操作" fixed="right">
                   <template slot-scope="scope">
-                    <el-button type="text" size="small">删除</el-button>
+                    <el-button type="text" size="small" @click="deleteGoods(scope.row)">删除</el-button>
                     <el-button type="text" size="small" @click="addOrderList(scope.row)">增加</el-button>
                   </template>
                 </el-table-column>
               </el-table>
               <div class="order-btn">
                 <el-button type="warning">挂单</el-button>
-                <el-button type="danger">删除</el-button>
-                <el-button type="success">结账</el-button>
+                <el-button type="danger" @click="deleteAllGoods">删除</el-button>
+                <el-button type="success" @click="checkOut">结账</el-button>
               </div>
             </el-tab-pane>
             <el-tab-pane label="挂单"></el-tab-pane>
@@ -87,7 +87,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -101,7 +100,6 @@ export default {
   },
   created: function() {
     // var _this = this   // es5要设置this指向
-
     /* 后台通信获取数据 */
     axios
       .get("http://jspang.com/DemoApi/oftenGoods.php")
@@ -133,33 +131,56 @@ export default {
   },
   methods: {
     /* 点击商品添加到列表 */
-    addOrderList (goods) {
-      let isHave = false
-       //判断是否这个商品已经存在于订单列表
-       for(let i = 0; i < this.tableData.length; i++) {
+    addOrderList(goods) {
+      let isHave = false;
+      //判断是否这个商品已经存在于订单列表
+      for (let i = 0; i < this.tableData.length; i++) {
         //  console.log(this.tableData[i].goodsId);
-         if(this.tableData[i].goodsId == goods.goodsId) {
-           isHave = true;  //已存在
-         }
-       }
-       //根据isHave的值判断订单列表中是否已经有此商品
-       if(isHave) {
-         //存在就进行数量添加 
-         let arr = this.tableData.filter(o =>o.goodsId == goods.goodsId)
-         arr[0].count++
+        if (this.tableData[i].goodsId == goods.goodsId) {
+          isHave = true; //已存在
+        }
+      }
+      //根据isHave的值判断订单列表中是否已经有此商品
+      if (isHave) {
+        //存在就进行数量添加
+        let arr = this.tableData.filter(o => o.goodsId == goods.goodsId);
+        arr[0].count++;
         //  console.log(arr)
-         
-       } else {
-         //不存在就推入数组
-         let newGoods = {
-           goodsId : goods.goodsId,
-           goodsName : goods.goodsName,
-           price : goods.price,
-           count : 1
-         }
-         this.tableData.push(newGoods)
-       }
-    } 
+      } else {
+        //不存在就推入数组
+        let newGoods = {
+          goodsId: goods.goodsId,
+          goodsName: goods.goodsName,
+          price: goods.price,
+          count: 1
+        };
+        this.tableData.push(newGoods);
+      }
+    },
+    /*  删除单个商品 */
+    deleteGoods(goods) {
+      // 数组里不包括点击的商品
+      // console.log(goods);
+      this.tableData = this.tableData.filter(o => o.goodsId != goods.goodsId);
+    },
+    /* 删除全部商品 */
+    deleteAllGoods() {
+      this.tableData = [];
+    },
+    /* 结账提示 */
+    checkOut() {
+      if (this.tableData != 0) {
+        // console.log(this.tableData);
+        
+        this.tableData = [];
+        this.$message({
+          message: "结账成功!",
+          type: "success"
+        });
+      } else {
+        this.$message.error('没有商品!')
+      }
+    }
   }
 };
 </script>
@@ -174,12 +195,10 @@ export default {
 .pos-order .atabs-title {
   margin-left: 10px;
 }
-
 /* 订单下方按钮 */
 .order-btn {
   margin-top: 10px;
 }
-
 /* 常用商品title */
 .often-goods .title {
   height: 20px;
@@ -189,7 +208,6 @@ export default {
   text-align: left;
   user-select: none;
 }
-
 /* 常用商品body */
 .often-goods .often-goods-list ul li {
   list-style: none;
@@ -199,17 +217,14 @@ export default {
   margin: 5px;
   background-color: #fff;
 }
-
 .often-goods .often-goods-list ul li .goods-price {
   color: #58b7ff;
 }
-
 .often-goods .often-goods-list ul li:hover {
   background-color: rgb(197, 210, 218);
   user-select: none;
   cursor: pointer;
 }
-
 /* 商品类型 */
 .goods-type {
   clear: both;
