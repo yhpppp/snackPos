@@ -3,17 +3,20 @@
     <!-- 左边导航 -->
     <leftNav></leftNav>
     <div class="main">
-      <router-view/>
+      <!-- <router-view/> -->
+      <pos></pos>
     </div>
   </div>
 </template>
 
 <script>
 import leftNav from "@/components/common/leftNav";
+import pos from "@/components/page/Pos";
 export default {
   name: "App",
   components: {
-    leftNav
+    leftNav,
+    pos
   }
 };
 </script>

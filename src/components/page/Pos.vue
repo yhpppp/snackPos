@@ -44,7 +44,7 @@
           <el-tabs>
             <el-tab-pane label="汉堡">
               <ul class='cookList'>
-                <li v-for="goods in type0Goods">
+                <li v-for="goods in type0Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
@@ -53,7 +53,7 @@
             </el-tab-pane>
             <el-tab-pane label="小吃">
               <ul class='cookList'>
-                <li v-for="goods in type1Goods">
+                <li v-for="goods in type1Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
@@ -62,7 +62,7 @@
             </el-tab-pane>
             <el-tab-pane label="饮料">
               <ul class='cookList'>
-                <li v-for="goods in type2Goods">
+                <li v-for="goods in type2Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
@@ -71,7 +71,7 @@
             </el-tab-pane>
             <el-tab-pane label="套餐">
               <ul class='cookList'>
-                <li v-for="goods in type3Goods">
+                <li v-for="goods in type3Goods" @click="addOrderList(goods)">
                   <span class="foodImg"><img :src="goods.goodsImg" width="100%"></span>
                   <span class="foodName">{{goods.goodsName}}</span>
                   <span class="foodPrice">￥{{goods.price}}元</span>
