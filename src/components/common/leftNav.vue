@@ -3,23 +3,23 @@
   <div class="left-nav">
     <ul>
       <li>
-        <i class="icon iconfont icon-trade"></i>
+        <i><img src="@/assets/trade.svg" alt=""></i>
         <div>收银</div>
       </li>
       <li>
-        <i class="icon iconfont icon-dianpu"></i>
+        <i><img src="@/assets/house.svg" alt=""></i>
         <div>店铺</div>
       </li>
       <li>
-        <i class="icon iconfont icon-box"></i>
+        <i><img src="@/assets/box.svg" alt=""></i>
         <div>商品</div>
       </li>
       <li>
-        <i class="icon iconfont icon-vip"></i>
+        <i><img src="@/assets/vip.svg" alt=""></i>
         <div>会员</div>
       </li>
       <li>
-        <i class="icon iconfont icon-set"></i>
+        <i><img src="@/assets/set.svg" alt=""></i>
         <div>设置</div>
       </li>
     </ul>
@@ -58,5 +58,9 @@
     background-color: rgb(6, 120, 190);
     user-select: none;    
 
+  }
+  img {
+    height: auto;
+    width: 50%;
   }
 </style>
