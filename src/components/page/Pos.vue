@@ -102,7 +102,7 @@ export default {
     // var _this = this   // es5要设置this指向
     /* 后台通信获取数据 */
     axios
-      .get("http://jspang.com/DemoApi/oftenGoods.php")
+      .get("/api/oftenGoods.json")
       .then(response => {
         // console.log(response);
         this.oftenGoods = response.data;
@@ -111,7 +111,7 @@ export default {
         alert("无法获取!");
       });
     axios
-      .get("http://jspang.com/DemoApi/typeGoods.php")
+      .get("/api/typeGoods.json")
       .then(response => {
         // console.log(response);
         this.type0Goods = response.data[0];
